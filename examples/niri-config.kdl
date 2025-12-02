@@ -1,0 +1,256 @@
+// Niri 配置文件示例
+// 文件路径: ~/.config/niri/settings.kdl
+//
+// 完整的 Niri 配置参考: https://yalter.github.io/niri/niri_config/
+
+// ===== 聚焦设置 =====
+
+// 新窗口聚焦行为
+focus new-window "last"     // last | none | workspace
+
+// 窗口浮动默认设置
+window default-floating false
+
+// ===== 移动和调整大小 =====
+
+// 移动窗口快捷键 (Win + Alt + 方向键)
+move modify ["Control", "Alt"]
+
+// 调整窗口大小快捷键 (Win + Shift + Alt + 方向键)
+resize modify ["Control", "Shift", "Alt"]
+
+// ===== 快捷键 =====
+
+// 应用程序启动器 (Super + D)
+ bindsym ["Control", "Mod1", "Super"] {
+     exec "wofi --show drun --prompt 'Launch Application'";
+ }
+
+// 终端 (Super + Enter)
+ bindsym ["Control", "Mod1", "Super", "Return"] {
+     exec "alacritty";
+ }
+
+// 退出 Niri (Ctrl + Alt + Q)
+quit confirm
+
+// ===== 工作区 =====
+
+// 工作区数量
+workspace-auto-back-and-forth yes
+workspace-default-workspace 1
+
+// 工作区切换
+bindsym ["Super"] { workspace prev; }
+bindsym ["Super"] { workspace next; }
+
+// 工作区绑定 (Super + 数字)
+bindsym ["Super", "Key1"] { workspace "1"; }
+bindsym ["Super", "Key2"] { workspace "2"; }
+bindsym ["Super", "Key3"] { workspace "3"; }
+bindsym ["Super", "Key4"] { workspace "4"; }
+bindsym ["Super", "Key5"] { workspace "5"; }
+bindsym ["Super", "Key6"] { workspace "6"; }
+bindsym ["Super", "Key7"] { workspace "7"; }
+bindsym ["Super", "Key8"] { workspace "8"; }
+bindsym ["Super", "Key9"] { workspace "9"; }
+bindsym ["Super", "Key0"] { workspace "10"; }
+
+// ===== 窗口操作 =====
+
+// 关闭窗口 (Alt + Q)
+bindsym ["Mod1"] { window close; }
+
+// 全屏 (Super + F)
+bindsym ["Control", "Mod1", "Super", "Keyf"] { window toggle-fullscreen; }
+
+// 浮动 (Super + Space)
+bindsym ["Control", "Mod1", "Super", "space"] { window toggle-floating; }
+
+// ===== 布局 =====
+
+// 布局模式
+layouts columns
+layouts rows
+layouts tabs
+layouts bias-balanced
+layouts spiral
+layouts wide
+
+// 布局设置
+layouts {
+    spacing 10              // 窗口间距 (像素)
+    workspace-padding 20    // 工作区边距 (像素)
+    inner-padding 10        // 内部边距 (像素)
+    preserve-working-space false
+}
+
+// ===== 边框和阴影 =====
+
+// 边框设置
+borders {
+    active "#A8AEFF"   // 活动窗口边框颜色
+    inactive "#333333" // 非活动窗口边框颜色
+    width 2            // 边框宽度 (像素)
+}
+
+// 圆角
+radius 8
+
+// 阴影
+shadows {
+    enabled true
+    blur 20
+    opacity 0.3
+}
+
+// ===== 颜色主题 =====
+
+colors {
+    background "#0C0D11"
+    background-alt "#111111"
+    surface "#1a1a1a"
+    surface-variant "#262626"
+
+    primary "#A8AEFF"
+    secondary "#a7a7a7"
+    tertiary "#d4c4fb"
+
+    text "#ffffff"
+    text-dim "#888888"
+    text-muted "#555555"
+
+    error "#ff6b6b"
+    success "#4ade80"
+    warning "#fbbf24"
+
+    border "#333333"
+    outline "#3c3c3c"
+    shadow "#000000"
+}
+
+// ===== 鼠标设置 =====
+
+// 聚焦跟随鼠标
+focus follow-mouse yes
+
+// 鼠标移动 (Alt + 鼠标左键)
+mouse move ["Mod1", "left"];
+
+// 鼠标调整大小 (Alt + 鼠标右键)
+mouse resize ["Mod1", "right"];
+
+// 拖拽
+startup-drag yes
+
+// ===== 动画 =====
+
+// 动画设置
+animation {
+    duration 200  // 动画持续时间 (毫秒)
+    curve ease-in-out  // 缓动函数
+}
+
+// 动画类型
+animations {
+    window-focus yes
+    workspace-switch yes
+    window-open yes
+    window-close yes
+}
+
+// ===== 键盘布局 =====
+
+// 键盘布局切换 (Alt + Space)
+bindsym ["Mod1", "space"] { keyboard-layout "next"; }
+
+// 固定布局
+keyboard-layout ["us", "de"]  // 多个布局
+
+// ===== 输入设备 =====
+
+// 触摸板设置
+input "touchpad" {
+    natural-scroll true
+    tap-to-click true
+    disable-while-typing false
+}
+
+// 鼠标速度
+input "pointer" {
+    speed 1.0
+    accel-profile "flat"
+}
+
+// ===== 音频 =====
+
+// 音量控制 (Alt + +/-)
+bindsym ["Mod1", "plus"] { exec "pactl set-sink-volume @DEFAULT_SINK@ +5%"; }
+bindsym ["Mod1", "minus"] { exec "pactl set-sink-volume @DEFAULT_SINK@ -5%"; }
+bindsym ["Mod1", "0"] { exec "pactl set-sink-volume @DEFAULT_SINK@ 100%"; }
+
+// 静音 (Alt + M)
+bindsym ["Mod1", "Keym"] { exec "pactl set-sink-mute @DEFAULT_SINK@ toggle"; }
+
+// ===== 显示器 =====
+
+// 多显示器配置
+// 在 NixOS 中通过 configuration.nix 配置更简单
+
+// 显示缩放
+output "*" {
+    scale 1.0
+}
+
+// 亮度控制 (Alt + B)
+bindsym ["Mod1", "Keyb"] { exec "brightnessctl set +5%"; }
+bindsym ["Mod1", "Shift", "Keyb"] { exec "brightnessctl set 5%-"; }
+
+// ===== 壁纸 =====
+
+// 壁纸 (通过 Noctalia 管理)
+wallpaper {
+    // Niri 本身不管理壁纸，由 Noctalia 或其他工具处理
+}
+
+// ===== 锁定 =====
+
+// 自动锁定 (通过 Noctalia 或 xss-lock)
+idle {
+    timeout 300  // 5 分钟无操作
+    watcher "xss-lock --notifier 'notify-send \"Screen locked\"'"
+}
+
+// ===== 输出管理 =====
+
+// 工作区自动切换到显示器
+workspace auto-back-and-forth true
+
+// ===== 特殊功能 =====
+
+// 截图 (Super + Shift + S)
+bindsym ["Control", "Mod1", "Super", "Keys"] { exec "grim -g \"$(slurp)\" ~/Pictures/screenshot-$(date +%Y%m%d-%H%M%S).png"; }
+
+// 切换 Overview (Super + W)
+bindsym ["Control", "Mod1", "Super", "Keyw"] { exec "noctalia-cli toggle-overview"; }
+
+// ===== 窗口特殊规则 =====
+
+// 某些应用程序总是浮动
+window-rule {
+    app-id "pavucontrol"
+    floating true
+}
+
+window-rule {
+    app-id "keepassxc"
+    floating true
+}
+
+// ===== 调试 =====
+
+// 启用调试输出
+debug {
+    level info      // trace | debug | info | warn | error
+    disable-group-ids false
+}
